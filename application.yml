@@ -1,0 +1,31 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: myshop-web-lql
+  datasource:
+    url: jdbc:mysql://192.168.186.137:3306/mysql?characterEncoding=UTF8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: Root@123456
+    type: com.alibaba.druid.pool.DruidDataSource # 自定义数据源
+eureka:
+  client:
+    register-with-eureka: true # 作为客户端需要注册到Eureka
+    fetch-registry: true  # 作为客户端需要从Eureka获取注册信息
+    service-url: # 客户端注册地址
+      defaultZone: http://localhost:8888/eureka
+  instance:
+    # 优先使用该服务的IP地址注册到Eureka，在生产环境建议改为true
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["hystrix-stream"]
+myshop-user:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
